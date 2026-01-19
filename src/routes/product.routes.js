@@ -7,9 +7,10 @@ const Product = require("../models/product.model");
 router.post("/upload", upload.single("product"), (req, res) => {
   res.json({
     success: 1,
-    image_url: `http://localhost:${process.env.PORT}/images/${req.file.filename}`,
+    image: `/images/${req.file.filename}`,
   });
 });
+
 
 // Add product
 router.post("/addproduct", controller.addProduct);
