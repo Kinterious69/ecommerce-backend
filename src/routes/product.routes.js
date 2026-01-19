@@ -4,12 +4,38 @@ const controller = require("../controllers/product.controller");
 const Product = require("../models/product.model");
 
 // Upload image
+
 router.post("/upload", upload.single("product"), (req, res) => {
+  const BASE_URL = process.env.BACKEND_URL || `http://localhost:${process.env.PORT}`;
+  
   res.json({
     success: 1,
-    image: `/images/${req.file.filename}`,
+    image_url: `${BASE_URL}/images/${req.file.filename}`,
   });
 });
+
+router.post("/update-images", async (req, res) => {
+  try {
+    const backendURL = process.env.BACKEND_URL;
+    const products = await Product.find({});
+
+    for (let product of products) {
+      if (product.image.includes("http://localhost:4000")) {
+        product.image = product.image.replace(
+          "http://localhost:4000",
+          backendURL
+        );
+        await product.save();
+      }
+    }
+
+    res.json({ success: true, message: "All product images updated" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: "Server error" });
+  }
+});
+
 
 
 // Add product
