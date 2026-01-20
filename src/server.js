@@ -4,25 +4,26 @@ const path = require("path");
 const app = require("./app");
 const connectDB = require("./config/db");
 
-// connect DB
+// Connect DB
 connectDB();
 
-// STATIC FILES 
+// Serve uploaded images
 app.use(
   "/images",
   express.static(path.join(__dirname, "../public/upload/images"))
 );
 
-// ROUTES 
+// Routes
 app.use("/api/products", require("./routes/product.routes"));
 app.use("/api/users", require("./routes/user.routes"));
 
-// root test
+// Root test
 app.get("/", (req, res) => {
   res.send("Express App is running");
 });
 
-// start server
-app.listen(process.env.PORT, () => {
-  console.log("Server running on " + process.env.PORT);
+// Start server
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
 });
