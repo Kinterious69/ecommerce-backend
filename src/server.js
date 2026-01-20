@@ -1,15 +1,5 @@
 
-// File upload route
-// Expects form-data with a "file" field
-/*app.post("/upload", upload.single("file"), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ message: "No file uploaded" });
-  }
 
-  // Construct full URL to uploaded file
-  const fileUrl = `${BACKEND_URL}/images/${req.file.filename}`;
-  res.json({ fileUrl });
-});*/
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
@@ -24,6 +14,17 @@ app.use(
   "/images",
   express.static(path.join(__dirname, "../public/upload/images"))
 );
+// File upload route
+/*// Expects form-data with a "file" field
+app.post("/upload", upload.single("file"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded" });
+  }
+
+  // Construct full URL to uploaded file
+  const fileUrl = `${BACKEND_URL}/images/${req.file.filename}`;
+  res.json({ fileUrl });
+});*/
 
 // API routes
 app.use("/api/products", require("./routes/product.routes"));
