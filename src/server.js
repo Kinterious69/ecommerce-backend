@@ -1,28 +1,27 @@
 require("dotenv").config();
-const express = require("express");
 const path = require("path");
 const app = require("./app");
 const connectDB = require("./config/db");
 
-// connect DB
+// Connect to MongoDB
 connectDB();
 
-// STATIC FILES 
+// Serve uploaded images
 app.use(
   "/images",
   express.static(path.join(__dirname, "../public/upload/images"))
 );
 
-// ROUTES 
+// Routes
 app.use("/api/products", require("./routes/product.routes"));
 app.use("/api/users", require("./routes/user.routes"));
 
-// root test
-app.get("/", (req, res) => {
-  res.send("Express App is running");
-});
+// Root route
+app.get("/", (req, res) => res.send("Express App is running"));
 
-// start server
-app.listen(process.env.PORT, () => {
-  console.log("Server running on " + process.env.PORT);
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on ${PORT}`);
+  console.log(`Backend URL: ${process.env.BACKEND_URL}`);
 });
