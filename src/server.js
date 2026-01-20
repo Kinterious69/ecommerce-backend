@@ -7,10 +7,11 @@ const connectDB = require("./config/db");
 // Connect DB
 connectDB();
 
-// Serve uploaded images
+// Serve uploaded images correctly
+// Assumes public folder is at the **root of your project**, not inside src
 app.use(
   "/images",
-  express.static(path.join(__dirname, "../public/upload/images"))
+  express.static(path.join(__dirname, "public/upload/images"))
 );
 
 // Routes
