@@ -11,7 +11,7 @@ connectDB();
 // Assumes public folder is at the **root of your project**, not inside src
 app.use(
   "/images",
-  express.static(path.join(__dirname, "public/upload/images"))
+  express.static(path.join(__dirname, "..", "public", "upload", "images"))
 );
 
 // Routes
