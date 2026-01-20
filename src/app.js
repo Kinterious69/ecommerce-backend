@@ -1,15 +1,6 @@
-/*const express = require("express");
-const cors = require("cors");
-
-const app = express();
-
-app.use(express.json());
-app.use(cors());
-
-module.exports = app;
-*/
 const express = require("express");
 const cors = require("cors");
+const upload = require("./utils/multer"); 
 
 const app = express();
 
@@ -17,9 +8,16 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Enable CORS (allow all origins by default, can restrict with FRONTEND_URL)
+// Enable CORS
 app.use(cors({
   origin: process.env.FRONTEND_URL || "*"
 }));
+app.post("/__test-upload", upload.single("image"), (req, res) => {
+  return res.json({
+    success: true,
+    file: req.file,
+  });
+});
+
 
 module.exports = app;
