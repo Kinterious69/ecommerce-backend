@@ -4,6 +4,7 @@ const Users = require("../models/user.model");
 
 //  ADD PRODUCT 
 exports.addProduct = async (req, res) => {
+   console.log("Request body:", req.body); 
   try {
     const {
       name,
