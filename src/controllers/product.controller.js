@@ -4,53 +4,14 @@ const Users = require("../models/user.model");
 
 //  ADD PRODUCT 
 exports.addProduct = async (req, res) => {
-   console.log("Request body:", req.body); 
   try {
-    const {
-      name,
-      image,
-      old_price,
-      new_price,
-      category,
-    } = req.body;
-
-    if (!name || !image || !new_price) {
-      return res.status(400).json({
-        success: false,
-        errors: "Missing required fields",
-      });
-    }
-
-    // 🚫 Safety check: block localhost URLs
-    if (image.includes("localhost")) {
-      return res.status(400).json({
-        success: false,
-        errors: "Invalid image path",
-      });
-    }
-
-    const product = await Product.create({
-      name,
-      image, // "/images/xxx.png"
-      old_price,
-      new_price,
-      category,
-    });
-
-    res.status(201).json({
-      success: true,
-      product,
-    });
-
+    const product = await Product.create(req.body);
+    res.status(201).json({ success: true, product });
   } catch (err) {
     console.error("Add product error:", err);
-    res.status(500).json({
-      success: false,
-      errors: "Server error",
-    });
+    res.status(500).json({ success: false, errors: "Server error" });
   }
 };
-
 
 //  GET ALL PRODUCTS 
 exports.getAllProducts = async (req, res) => {

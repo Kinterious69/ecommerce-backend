@@ -4,27 +4,25 @@ const path = require("path");
 const app = require("./app");
 const connectDB = require("./config/db");
 
-// Connect DB
+// connect DB
 connectDB();
 
-// Serve uploaded images correctly
-// Assumes public folder is at the **root of your project**, not inside src
+// STATIC FILES 
 app.use(
   "/images",
-  express.static(path.join(__dirname, "..", "public", "upload", "images"))
+  express.static(path.join(__dirname, "../public/upload/images"))
 );
 
-// Routes
+// ROUTES 
 app.use("/api/products", require("./routes/product.routes"));
 app.use("/api/users", require("./routes/user.routes"));
 
-// Root test
+// root test
 app.get("/", (req, res) => {
   res.send("Express App is running");
 });
 
-// Start server
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-  console.log("Server running on port " + PORT);
+// start server
+app.listen(process.env.PORT, () => {
+  console.log("Server running on " + process.env.PORT);
 });
