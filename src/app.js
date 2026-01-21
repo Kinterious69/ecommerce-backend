@@ -1,41 +1,38 @@
-const express = require("express");
+/*const express = require("express");
 const cors = require("cors");
-const upload = require("./utils/multer"); 
+const upload = require("./utils/multer");
+const productRoutes = require("./routes/product.routes");
+const userRoutes = require("./routes/user.routes");
 
 const app = express();
 
-// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Enable CORS
-app.use(cors({
-  origin: process.env.FRONTEND_URL || "*"
-}));
-app.post("/__test-upload", upload.single("image"), (req, res) => {
-  return res.json({
-    success: true,
-    file: req.file,
-  });
-});
+app.use(cors({ origin: "*" }));
 
 
-// Upload a single file
-app.post("/upload", upload.single("file"), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ success: false, message: "No file uploaded" });
-  }
+// API routes
+app.use("/api/products", productRoutes);
+app.use("/api/users", userRoutes);
 
-  const BACKEND_URL =
-    process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 4000}`;
+module.exports = app;
+*/
+const express = require("express");
+const cors = require("cors");
+const productRoutes = require("./routes/product.routes");
+const userRoutes = require("./routes/user.routes");
 
-  // Return the URL that can be used to access the uploaded image
-  res.status(200).json({
-    success: true,
-    imageUrl: `${BACKEND_URL}/images/${req.file.filename}`,
-  });
-});
+const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({ origin: "*" }));
 
+// Remove or comment out this duplicate upload route
+// app.post("/upload", upload.single("file"), (req, res) => { ... });
+
+// API routes
+app.use("/api/products", productRoutes);
+app.use("/api/users", userRoutes);
 
 module.exports = app;
