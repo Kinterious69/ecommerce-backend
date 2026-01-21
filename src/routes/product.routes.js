@@ -170,6 +170,17 @@ router.post("/upload", upload.single("product"), (req, res) => {
     });
   }
 });
+router.get("/test", (req, res) => {
+  res.json({ 
+    success: true, 
+    message: "Product routes working",
+    cloudinary: {
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME ? "Set" : "Missing",
+      api_key: process.env.CLOUDINARY_API_KEY ? "Set" : "Missing",
+    }
+  });
+});
+
 
 // Add product
 router.post("/addproduct", controller.addProduct);
