@@ -9,14 +9,14 @@ const connectDB = require("./config/db");
 connectDB();
 
 // Ensure the upload folder exists
-const uploadDir = path.join(__dirname, "../public/upload/images");
+/*const uploadDir = path.join(__dirname, "../public/upload/images");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
   console.log("Created upload directory:", uploadDir);
-}
+}*/
 
 // Serve uploaded images statically
-app.use("/images", express.static(uploadDir));
+//app.use("/images", express.static(uploadDir));
 
 // Start server
 const PORT = process.env.PORT || 4000;
